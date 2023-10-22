@@ -983,7 +983,7 @@ def ssbulist_search():
 def ssbulist_download():
     id = int(request.args.get('id',-1))
     print(f'id -> {id}')
-    rec = voiceList.select(id)
+    rec = ssbuList.select(id)
     path = os.path.join('./','sharemotiApi','data','ssbu',rec.year,rec.date,rec.file_name+'.mp4')
     print(path)
     return send_file(path , mimetype='video/mp4')
