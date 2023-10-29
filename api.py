@@ -84,11 +84,10 @@ from sharemotiApi.src import karaokeList
 #VoiceList
 from sharemotiApi.src import voiceList
 
-#SsbuList
-from sharemotiApi.src import ssbuList
-
 config = motitter_const.api_option()
 PAGE_SIZE = config.PAGE_SIZE
+
+NEW_LINE_TEXT = "jsdlkjflasjfiojadispfosdjfposdj"
 
 """
 Twitter API
@@ -130,7 +129,13 @@ def twitter_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "{'records':[],'totalPages':0}"
     response = jsonify(json_data)
@@ -203,7 +208,13 @@ def nitter_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "{'records':[],'totalPages':0}"
     response = jsonify(json_data)
@@ -277,7 +288,13 @@ def hololewd_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "{'records':[],'totalPages':0}"
     response = jsonify(json_data)
@@ -314,7 +331,13 @@ def wordlist_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -367,7 +390,13 @@ def wordlist2_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -422,7 +451,13 @@ def namelist_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -504,7 +539,13 @@ def yakiList_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -557,7 +598,13 @@ def schoolList_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -608,7 +655,13 @@ def mannerList_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -662,7 +715,13 @@ def haikuList_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -725,7 +784,13 @@ def holosong_select():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -752,7 +817,13 @@ def holosong_ori():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -773,7 +844,13 @@ def holosong_album():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -791,7 +868,13 @@ def holosong_album_music():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -866,7 +949,13 @@ def imagelist_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -913,7 +1002,13 @@ def karaokelist_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -943,7 +1038,13 @@ def voicelist_search():
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
     json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
     if len(records) == 0:
         json_data = "[]"
     response = jsonify(json_data)
@@ -957,36 +1058,6 @@ def voicelist_download():
     path = os.path.join('./','sharemotiApi','data','voice',rec.file_name+'.mp3')
     print(path)
     return send_file(path , mimetype='audio/mpeg')
-
-"""
-スマブラの切り抜き
-"""
-@app.route("/ssbu/search",methods=['GET'])
-def ssbulist_search():
-    records = ssbuList.search()
-    # 辞書にまとめる
-    result = {
-        "records": json.dumps(
-            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
-        )
-    }
-    # レスポンスとしてJSONデータを返す
-    # JSON文字列に変換
-    json_data = json.dumps(result, ensure_ascii=False)
-    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
-    if len(records) == 0:
-        json_data = "[]"
-    response = jsonify(json_data)
-    return response
-
-@app.route('/ssbu/download',methods=['GET'])
-def ssbulist_download():
-    id = int(request.args.get('id',-1))
-    print(f'id -> {id}')
-    rec = ssbuList.select(id)
-    path = os.path.join('./','sharemotiApi','data','ssbu',rec.year,rec.date,rec.file_name+'.mp4')
-    print(path)
-    return send_file(path , mimetype='video/mp4')
 
 """
 その他のエンドポイント
