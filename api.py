@@ -84,6 +84,9 @@ from sharemotiApi.src import karaokeList
 #VoiceList
 from sharemotiApi.src import voiceList
 
+#SsbuList
+from sharemotiApi.src import ssbuList
+
 config = motitter_const.api_option()
 PAGE_SIZE = config.PAGE_SIZE
 
@@ -896,6 +899,37 @@ def holosong_album_music():
         json_data = "[]"
     response = jsonify(json_data)
     return response
+
+"""
+スマブラの切り抜き
+"""
+@app.route("/ssbu/search",methods=['GET'])
+def ssbulist_search():
+    records = ssbuList.search()
+    # 辞書にまとめる
+    result = {
+        "records": json.dumps(
+            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
+        )
+    }
+    # レスポンスとしてJSONデータを返す
+    # JSON文字列に変換
+    json_data = json.dumps(result, ensure_ascii=False)
+    json_data = json_data.replace("\\", "").replace('"[{', "[{").replace('}]"', "}]")
+    if len(records) == 0:
+        json_data = "[]"
+    response = jsonify(json_data)
+    return response
+
+@app.route('/ssbu/download',methods=['GET'])
+def ssbulist_download():
+    id = int(request.args.get('id',-1))
+    print(f'id -> {id}')
+    rec = ssbuList.select(id)
+    path = os.path.join('./','sharemotiApi','data','ssbu',rec.year,rec.date,rec.file_name+'.mp4')
+    print(path)
+    return send_file(path , mimetype='video/mp4')
+
 
 """
 ファイルアップロード・ダウンロード
