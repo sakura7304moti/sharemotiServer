@@ -516,8 +516,25 @@ def namelist_init():
 
 @app.route("/nameList/names", methods=["GET"])
 def nameList_names():
-    ls = sharemoti_const.ssbu_names()
-    json_data = json.dumps(ls, ensure_ascii=False)
+    records = sharemoti_const.ssbu_names()
+    # 辞書にまとめる
+    result = {
+        "records": json.dumps(
+            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
+        )
+    }
+    # レスポンスとしてJSONデータを返す
+    # JSON文字列に変換
+    json_data = json.dumps(result, ensure_ascii=False)
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
+    if len(records) == 0:
+        json_data = "[]"
     response = jsonify(json_data)
     return response
 
