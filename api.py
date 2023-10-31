@@ -44,6 +44,9 @@ import math
 from monitter.src import sqlite as monitter_sqlite
 from monitter.src import const as monitter_const
 
+# mohoo
+from mohoo.src import const as mohoo_const
+
 # Hololewd
 from mottit.src import sqlite as hololewd_sqlite
 from mottit.src import const as hololewd_const
@@ -248,7 +251,25 @@ def nitter_search_count_handler():
 
 @app.route("/nitter/hololist", methods=["GET"])
 def nitter_get_hololist():
-    json_data = json.dumps(monitter_const.holoList(), ensure_ascii=False)
+    records = mohoo_const.holoList()
+    # 辞書にまとめる
+    result = {
+        "records": json.dumps(
+            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
+        )
+    }
+    # レスポンスとしてJSONデータを返す
+    # JSON文字列に変換
+    json_data = json.dumps(result, ensure_ascii=False)
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
+    if len(records) == 0:
+        json_data = "[]"
     response = jsonify(json_data)
     return response
 
