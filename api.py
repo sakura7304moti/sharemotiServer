@@ -77,6 +77,7 @@ from sharemotiApi.src import haikuList
 from holosong.src import const as holosong_const
 from holosong.src import utils as holosong_utils
 from holosong.src import sqlite as holosong_sqlite
+from holosong.src import yt as holosong_yt
 
 #ImageList
 from sharemotiApi.src import imageList
@@ -86,6 +87,9 @@ from sharemotiApi.src import karaokeList
 
 #VoiceList
 from sharemotiApi.src import voiceList
+
+#RadioList
+from sharemotiApi.src import radioList
 
 #SsbuList
 from sharemotiApi.src import ssbuList
@@ -922,6 +926,46 @@ def holosong_album_music():
     return response
 
 """
+ホロライブのアルバム(ファイル一覧)を取得する
+"""
+@app.route('/holosong/yt',methods=["GET"])
+def holosong_yt():
+    records = holosong_yt.get_music_list()
+    # 辞書にまとめる
+    result = {
+        "records": json.dumps(
+            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
+        )
+    }
+    # レスポンスとしてJSONデータを返す
+    # JSON文字列に変換
+    json_data = json.dumps(result, ensure_ascii=False)
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
+    if len(records) == 0:
+        json_data = "[]"
+    response = jsonify(json_data)
+    return response
+
+"""
+ホロライブの曲ダウンロード
+"""
+@app.route('/holosong/yt/download',methods=['GET'])
+def holosong_yt_download():
+    file_name = int(request.args.get('fileName',""))
+    print(f'file_name -> {file_name}')
+    path = os.path.join('./','holosong','music',file_name+'.mp3')
+    print(path)
+    return send_file(path , mimetype='audio/mpeg')
+
+
+
+"""
 スマブラの切り抜き
 """
 @app.route("/ssbu/search",methods=['GET'])
@@ -1128,6 +1172,42 @@ def voicelist_download():
     print(f'id -> {id}')
     rec = voiceList.select(id)
     path = os.path.join('./','sharemotiApi','data','voice',rec.file_name+'.mp3')
+    print(path)
+    return send_file(path , mimetype='audio/mpeg')
+
+"""
+おむ子レイディオ
+"""
+@app.route("/radio/search",methods=['GET'])
+def radiolist_search():
+    records = radioList.search()
+    # 辞書にまとめる
+    result = {
+        "records": json.dumps(
+            records, default=lambda obj: obj.__dict__(), ensure_ascii=False
+        )
+    }
+    # レスポンスとしてJSONデータを返す
+    # JSON文字列に変換
+    json_data = json.dumps(result, ensure_ascii=False)
+    json_data = json_data.replace('"[{', "[{").replace('}]"', "}]")
+    
+    #改行文字だけ残してバックスラッシュは削除
+    json_data = json_data.replace('\\n',NEW_LINE_TEXT)
+    json_data = json_data.replace('\\','')
+    json_data = json_data.replace(NEW_LINE_TEXT,'\\n')
+    
+    if len(records) == 0:
+        json_data = "[]"
+    response = jsonify(json_data)
+    return response
+
+@app.route('/radio/download',methods=['GET'])
+def radiolist_download():
+    id = int(request.args.get('id',-1))
+    print(f'id -> {id}')
+    rec = radioList.select(id)
+    path = os.path.join('./','sharemotiApi','data','radio','mp3',rec.file_name+'.mp3')
     print(path)
     return send_file(path , mimetype='audio/mpeg')
 
