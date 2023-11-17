@@ -19,7 +19,8 @@ from werkzeug.utils import secure_filename
 """
 ファイルアップロード
 """
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'uploads')
+print(f'uploads -> {UPLOAD_FOLDER}')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -1003,10 +1004,11 @@ def ssbulist_download():
 def imagelist_insert():
     json_data = request.json
     file_name = json_data.get("fileName","")
+    ext = json_data.get("ext","")
     title = json_data.get("title","")
     detail = json_data.get("detail","")
     
-    result = imageList.insert(file_name,title,detail)
+    result = imageList.insert(file_name,ext,title,detail)
     
     # JSON文字列に変換
     json_data = json.dumps(result.__dict__(), ensure_ascii=False)
@@ -1034,7 +1036,7 @@ def imagelist_upload():
     #ext ok filename ok
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        ext = filename.rsplit('.', 1)[1].lower()
+        ext = filename.rsplit('.', 1)[-1].lower()
         
         # 現在の日時を取得
         now = datetime.datetime.now()
@@ -1042,16 +1044,22 @@ def imagelist_upload():
         save_file_name = formatted_datetime + '.' + ext
         
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], save_file_name))
+        #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         
         jsondata = {"fileName":save_file_name}
+        #jsondata = {"fileName":filename}
         response = jsonify(jsondata)
         return response
         
 @app.route('/imageList/download',methods=['GET'])
 def imagelist_download():
     #image file only
-    file_name = request.args.get('file')
-    return send_file(os.path.join(app.config['UPLOAD_FOLDER'],file_name).replace('./','') , mimetype='image/jpeg')
+    file_name = request.args.get('fileName')
+    ext = request.args.get('ext')
+    
+    path = os.path.join(app.config['UPLOAD_FOLDER'],file_name+'.'+ext)
+    print(f'download path -> {path}')
+    return send_file(path, mimetype='image/jpeg')
 
 @app.route("/imageList/search",methods=['GET'])
 def imagelist_search():
